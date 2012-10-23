@@ -1,5 +1,6 @@
 require 'twilio-ruby'
 require 'wunderground_api_client'
+require 'spitcast_api_client'
 
 def send_sms(conditions)
   @account_sid = ENV["TWILLIO_ACCOUNT_SID"]
@@ -19,12 +20,13 @@ end
 
 desc "Looks at the weather and surf API and sends an SMS if they're good."
 task :check_and_send => :environment do
-  include WundergroundApiClient
+  wunderground = WundergroundApiClient.new
+  spitcast = SpitcastApiClient.new
   
-  # TODO: use the spitcast API too: http://www.spitcast.com/api/docs/
+  puts spitcast.fetch_json_for_county("san-francisco")
   
   # 94122 is the outer sunset zip code.
-  puts fetch_json_for_zip(94122)
+  puts wunderground.fetch_json_for_zip(94122)
   
   # TODO: don't hard code the conditions -- fetch conditions from APIs.
   send_sms("good 7-8ft")
