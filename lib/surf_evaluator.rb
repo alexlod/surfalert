@@ -2,18 +2,19 @@ require 'spitcast_api_client'
 
 class SurfEvaluator
 
-  def check_surf_conditions(county, spot_id)
+  def check_surf_conditions(surf_preference)
     spitcast = SpitcastApiClient.new
-    surf_json = spitcast.fetch_json_for_county_and_spot_id(county, spot_id)
+    surf_json = spitcast.fetch_json_for_county_and_spot_id('san-francisco', surf_preference.spot_id)
 
-    avg_size = surf_json["avgSize"]
-    if avg_size > 6 and avg_size < 9
+    min_size = surf_json["minSize"]
+    max_size = surf_json["maxSize"]
+    if min_size > surf_preference.min_size and max_size < surf_preference.max_size
       msg = "Wake your ass up, the surf is pumping! Size of surf: " + 
-            surf_json["minSize"].to_s + "' to " + surf_json["maxSize"].to_s + "'"
+            min_size.to_s + "' to " + max_size.to_s + "'"
       return true, msg
     else
       msg = "Conditions could be better... Size of surf: " +
-            surf_json["minSize"].to_s + "' to " + surf_json["maxSize"].to_s + "'"
+            min_size.to_s + "' to " + max_size.to_s + "'"
       return false, msg
     end
   end
