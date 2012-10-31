@@ -9,7 +9,8 @@ task :check_and_send => :environment do
   surf_evaluator = SurfEvaluator.new
   
   # northern ocean beach.
-  conditions, msg = surf_evaluator.check_surf_conditions("san-francisco", 114)
+  surf_preference = SurfPreference.find(1)
+  conditions, msg = surf_evaluator.check_surf_conditions(surf_preference)
   
   # 94121 is the outer richmond zip code.
   puts wunderground.fetch_json_for_zip(94121)
@@ -18,7 +19,7 @@ task :check_and_send => :environment do
   if conditions
     twilio.send_sms_message(
       ENV["TWILIO_FROM_NUMBER"], 
-      ENV["TWILIO_TO_NUMBER"],
+      surf_preference.phone_no,
       msg
     )
   else
