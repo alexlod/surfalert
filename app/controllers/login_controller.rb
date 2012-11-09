@@ -1,4 +1,6 @@
 class LoginController < ApplicationController
+  before_filter :requires_login, :only => [:destroy]
+  
   def create
     user = User.find_by_email(params[:email])  
     if user && user.authenticate(params[:password])  
