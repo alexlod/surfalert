@@ -1,9 +1,11 @@
 class SurfPreference < ActiveRecord::Base
-  attr_accessible :max_size, :min_size, :min_shape, :spot_id, :user
+  attr_accessible :max_size, :min_size, :min_shape, :spot_id, :user,
+                  :start, :end
 
   belongs_to :user
   
-  validates_presence_of :max_size, :min_size, :min_shape, :spot_id
+  validates_presence_of :max_size, :min_size, :min_shape, :spot_id,
+                        :start, :end
   validates :max_size, :numericality => {
     :only_integer => true,
     :greater_than => 0,
@@ -32,7 +34,7 @@ class SurfPreference < ActiveRecord::Base
     114 => "North Ocean Beach",
     117 => "South Ocean Beach"
   }.freeze
-  
+
   # determines if the shape is good enough according to the `min_shape` value in this preference.
   def shape_good_enough?(actual_shape_symbol)
     ordered_shapes = SHAPES.keys

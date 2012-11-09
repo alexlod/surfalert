@@ -14,14 +14,19 @@
     </div>
   <% end %>
   <fieldset>
-    <%= f.label :max_size %>:
-    <%= f.text_field :max_size, :placeholder => "In feet" %>
     <%= f.label :min_size %>:
     <%= f.text_field :min_size, :placeholder => "In feet" %>
+    <%= f.label :max_size %>:
+    <%= f.text_field :max_size, :placeholder => "In feet" %>
     <%= f.label :min_shape %>:
     <%= select_tag "surf_preference[min_shape]", shape_selector_options(@surf_preference.min_shape).html_safe %>
     <%= f.label :spot_id %>:
     <%= select_tag "surf_preference[spot_id]", spot_selector_options(@surf_preference.spot_id).html_safe %>
+    <%= f.label :start %>:
+    <%= f.time_select :start, :class => "time" %>
+    <%= f.label :end %>:
+    <%= f.time_select :end, :class => "time" %>
+ 
   </fieldset>
   <button type="submit">Save</button>
 <% end %>
