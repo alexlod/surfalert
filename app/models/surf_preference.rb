@@ -1,7 +1,9 @@
 class SurfPreference < ActiveRecord::Base
-  attr_accessible :max_size, :min_size, :min_shape, :spot_id, :phone_no
+  attr_accessible :max_size, :min_size, :min_shape, :spot_id, :user
+
+  belongs_to :user
   
-  validates_presence_of :max_size, :min_size, :min_shape, :spot_id, :phone_no
+  validates_presence_of :max_size, :min_size, :min_shape, :spot_id
   validates :max_size, :numericality => {
     :only_integer => true,
     :greater_than => 0,

@@ -1,4 +1,6 @@
 class SurfPreferencesController < ApplicationController
+  before_filter :requires_login
+  
   def edit
     @surf_preference = SurfPreference.find(params[:id])
   end
