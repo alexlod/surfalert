@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031204453) do
+ActiveRecord::Schema.define(:version => 20121101045830) do
 
   create_table "surf_preferences", :force => true do |t|
     t.integer  "max_size"
@@ -20,7 +20,15 @@ ActiveRecord::Schema.define(:version => 20121031204453) do
     t.integer  "spot_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "password_digest"
     t.string   "phone_no"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end
