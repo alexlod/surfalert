@@ -1,6 +1,10 @@
 Surfalert::Application.routes.draw do
-  resources :surf_preferences, :only => [:show, :edit, :update]
+  resources :surf_preferences
   resources :users
-  resources :login, :only => [:index, :create]
+  
+  get "login" => 'login#index'
+  post "login" => 'login#create'
+  get "logout" => 'login#destroy'
+  
   root :to => redirect("/login")
 end

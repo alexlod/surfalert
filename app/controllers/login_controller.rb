@@ -5,7 +5,7 @@ class LoginController < ApplicationController
     user = User.find_by_email(params[:email])  
     if user && user.authenticate(params[:password])  
       session[:user_id] = user.id
-      redirect_to edit_surf_preference_path(user.surf_preferences.first) 
+      redirect_to surf_preferences_path
     else  
       flash[:notice] = "Invalid email or password"  
       render "index"  

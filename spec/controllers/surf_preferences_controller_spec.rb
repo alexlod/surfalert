@@ -2,18 +2,32 @@ require 'spec_helper'
 
 describe SurfPreferencesController do
   before(:each) do
-    request.env["rack.url_scheme"] = "https"
-    request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64([ENV["AUTH_USERNAME"], ENV["AUTH_PASSWORD"]].join(":"))
+    session[:user_id] = FactoryGirl.create(:user).id
+  end
+  
+  describe "#new" do
+    it "should have good status" do
+      get :new
+      response.status.should == 200
+    end
+  end
+  
+  describe "#create" do
+    it "should save correctly" do
+      post :create, :surf_preference => FactoryGirl.attributes_for(:surf_preference)
+      pref = SurfPreference.all.first
+      response.should redirect_to(surf_preferences_path)
+      pref.user_id.should == session[:user_id]
+    end
+    
+    it "should fail validations" do
+      post :create, :surf_preference => FactoryGirl.attributes_for(:surf_preference, min_shape: nil)
+      response.status.should == 200
+      SurfPreference.all.count.should == 0
+    end
   end
   
   describe "#edit" do
-    it "should fail when bad authentication credentials are given" do
-      request.env["HTTP_AUTHORIZATION"] = nil
-      pref = FactoryGirl.create(:surf_preference)
-      get :edit, :id => pref.id
-      response.status.should == 401
-    end
-    
     it "should have good status" do
       pref = FactoryGirl.create(:surf_preference)
       get :edit, :id => pref.id
@@ -29,10 +43,9 @@ describe SurfPreferencesController do
         :max_size => pref.max_size,
         :min_size => new_min_size,
         :min_shape => pref.min_shape,
-        :spot_id => pref.spot_id,
-        :phone_no => pref.phone_no
+        :spot_id => pref.spot_id
       }
-      response.should redirect_to(edit_surf_preference_path(pref))
+      response.should redirect_to(surf_preferences_path)
       pref = SurfPreference.find(pref.id) # sync from the db.
       pref.min_size.should == new_min_size
     end
@@ -44,8 +57,7 @@ describe SurfPreferencesController do
         :max_size => pref.max_size,
         :min_size => nil,
         :min_shape => pref.min_shape,
-        :spot_id => pref.spot_id,
-        :phone_no => pref.phone_no
+        :spot_id => pref.spot_id
       }
       response.status.should == 200
       pref = SurfPreference.find(pref.id) # sync from the db.
