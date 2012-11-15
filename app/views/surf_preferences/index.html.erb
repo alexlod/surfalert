@@ -1,0 +1,16 @@
+<h1>Surf preferences</h1>
+
+<ul>
+  <% @surf_preferences.each do |surf_preference| %>
+    <li>
+      <%= link_to edit_surf_preference_path(surf_preference) do %>
+        <%= surf_preference.min_size%>-<%= surf_preference.max_size %>ft, 
+        <%= SurfPreference::SPOTS[surf_preference.spot_id] %>
+      <% end %>
+      &middot;
+      <%= link_to "delete", surf_preference_path(surf_preference), :method => :delete, :confirm => "Are you sure?" %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "create new", new_surf_preference_path %>
