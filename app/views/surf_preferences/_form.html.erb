@@ -22,10 +22,10 @@
     <%= select_tag "surf_preference[min_shape]", shape_selector_options(@surf_preference.min_shape).html_safe %>
     <%= f.label :spot_id %>:
     <%= select_tag "surf_preference[spot_id]", spot_selector_options(@surf_preference.spot_id).html_safe %>
-    <%= f.label :start %>:
-    <%= f.time_select :start, :class => "time" %>
-    <%= f.label :end %>:
-    <%= f.time_select :end, :class => "time" %>
+    <%= f.label :start_time %>:
+    <%= f.time_select :start_time, :class => "time" %>
+    <%= f.label :end_time %>:
+    <%= f.time_select :end_time, :class => "time" %>
  
   </fieldset>
   <button type="submit">Save</button>

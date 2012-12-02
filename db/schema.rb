@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109192946) do
+ActiveRecord::Schema.define(:version => 20121202195915) do
 
   create_table "surf_preferences", :force => true do |t|
     t.integer  "max_size"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20121109192946) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "user_id"
-    t.time     "start"
-    t.time     "end"
+    t.time     "start_time"
+    t.time     "end_time"
     t.datetime "last_contact"
   end
 
