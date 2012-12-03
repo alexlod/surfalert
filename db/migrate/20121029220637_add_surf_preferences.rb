@@ -7,11 +7,6 @@ class AddSurfPreferences < ActiveRecord::Migration
       t.integer :spot_id
       t.timestamps
     end
-    
-    SurfPreference.create!(:max_size => 4,
-                           :min_size => 2,
-                           :min_shape => "fg",
-                           :spot_id => 114)
   end
   
   def down
