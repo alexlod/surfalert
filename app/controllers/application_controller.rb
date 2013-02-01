@@ -16,14 +16,6 @@ class ApplicationController < ActionController::Base
     def setup_current_user
       @current_user = User.find(session[:user_id]) unless session[:user_id].nil?
     end
-  
-    # use as a `before_filter` to do a basic HTTP auth.  Credentials
-    # are taken from the environment.
-    def basic_auth
-      authenticate_or_request_with_http_basic do |username, password|
-        username == ENV["AUTH_USERNAME"] && ENV["AUTH_PASSWORD"]
-      end
-    end
     
     # Redirects a user to the login path if they aren't logged in.
     def requires_login
