@@ -23,3 +23,5 @@ Run `$ rake spec`
 ## Current Status
 
 This app is in development.  Do not expect it to work.
+
+Git test
